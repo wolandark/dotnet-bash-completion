@@ -1,0 +1,10 @@
+dotnet-bash-completion
+
+bash completions for dotnet cli 
+
+source manually or at `.bashrc`
+`source /path/to/dotnet-completion.bash`
+
+Tab Tab away
+
+Enjoy!
