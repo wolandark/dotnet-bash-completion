@@ -56,12 +56,13 @@ _dotnet_completion() {
     local configurations="Debug Release"
 
     # Special handling for 'dotnet new' command with multiple words
-    if [ "${words[1]}" = "new" ] && [ "${#words[@]}" -gt 2 ]; then
+    if [ "${words[1]}" = "new" ] && [ "${#words[@]}" -gt 3 ]; then
+        # Only handle if we have: dotnet new template name/options...
         local template="${words[2]}"
 
         # Check if the template is valid
         if echo "${templates}" | grep -q "\\b${template}\\b"; then
-            # We're in a 'dotnet new template ...' context
+            # We're in a 'dotnet new template name/options...' context
             case "${cur}" in
                 --*)
                     COMPREPLY=($(compgen -W "${new_opts}" -- "${cur}"))
@@ -86,6 +87,7 @@ _dotnet_completion() {
                     COMPREPLY=($(compgen -W "${new_opts}" -- "${cur}"))
                     ;;
                 *)
+                    # Only show templates when directly after 'dotnet new'
                     COMPREPLY=($(compgen -W "${templates}" -- "${cur}"))
                     ;;
             esac
